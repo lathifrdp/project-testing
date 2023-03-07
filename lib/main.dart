@@ -57,8 +57,12 @@ class _MyAppState extends State<MyApp> {
   }
 
   Future<void> _login() async {
-    final LoginResult result = await FacebookAuth.instance
-        .login(); // by default we request the email and the public profile
+    final LoginResult result = await FacebookAuth.instance.login(
+        // permissions: [
+        //   'public_profile',
+        //   'email',
+        // ],
+        ); // by default we request the email and the public profile
 
     // loginBehavior is only supported for Android devices, for ios it will be ignored
     // final result = await FacebookAuth.instance.login(
