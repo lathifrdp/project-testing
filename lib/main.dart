@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
+import 'package:project_testing/speech_text_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -97,9 +98,16 @@ class _MyAppState extends State<MyApp> {
     setState(() {});
   }
 
+  final navigatorKey = GlobalKey<NavigatorState>();
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      navigatorKey: navigatorKey,
+      routes: {
+        //'/': (context) => const MyApp(),
+        '/speech-text': (context) => const SpeechTextPage(),
+      },
       home: Scaffold(
         appBar: AppBar(
           title: const Text('Facebook Auth Example'),
@@ -113,7 +121,22 @@ class _MyAppState extends State<MyApp> {
                   padding: const EdgeInsets.all(8.0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
-                    children: <Widget>[
+                    children: [
+                      const SizedBox(
+                        height: 30,
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          navigatorKey.currentState?.pushNamed('/speech-text');
+                        },
+                        child: const Text(
+                          "Move to speech text",
+                          style: TextStyle(color: Colors.black, fontSize: 20),
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 30,
+                      ),
                       Text(
                         _userData != null
                             ? prettyPrint(_userData!)
