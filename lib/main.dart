@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
+import 'package:project_testing/bloc_rxdart_page.dart';
 import 'package:project_testing/speech_text_page.dart';
 
 void main() {
@@ -107,6 +108,7 @@ class _MyAppState extends State<MyApp> {
       routes: {
         //'/': (context) => const MyApp(),
         '/speech-text': (context) => const SpeechTextPage(),
+        '/bloc-rxdart': (context) => const BlocRxdartPage()
       },
       home: Scaffold(
         appBar: AppBar(
@@ -157,7 +159,21 @@ class _MyAppState extends State<MyApp> {
                           style: const TextStyle(color: Colors.white),
                         ),
                       ),
-                      const SizedBox(height: 50),
+                      const SizedBox(height: 30),
+                      InkWell(
+                        onTap: () {
+                          navigatorKey.currentState?.pushNamed('/bloc-rxdart');
+                        },
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 16, vertical: 8),
+                          color: Colors.green,
+                          child: const Text(
+                            "Bloc RxDart",
+                            style: TextStyle(color: Colors.white),
+                          ),
+                        ),
+                      ),
                     ],
                   ),
                 ),
