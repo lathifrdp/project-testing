@@ -1,5 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- Project Testing -->
+    <!-- <string name="app_name">Project Testing</string>
     <string name="facebook_app_id">1639749869872551</string>
-    <string name="facebook_client_token">0e09c03e5e4290f93d0cd164e93fc9a8</string>
+    <string name="fb_login_protocol_scheme">fb1639749869872551</string>
+    <string name="facebook_client_token">0e09c03e5e4290f93d0cd164e93fc9a8</string> -->
+
+    <!-- Testing -->
+    <string name="app_name">Testing</string>
+    <string name="facebook_app_id">609368967871100</string>
+    <string name="fb_login_protocol_scheme">fb609368967871100</string>
+    <string name="facebook_client_token">c55310e1758f95ae36a82bb3f469165a</string>
 </resources>
