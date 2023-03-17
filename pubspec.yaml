@@ -30,10 +30,13 @@ environment:
 dependencies:
   bloc: ^8.1.1
   cupertino_icons: ^1.0.2
+  firebase_auth: ^4.2.10
+  firebase_core: ^2.7.1
   flutter:
     sdk: flutter
   flutter_bloc: ^8.1.2
   flutter_facebook_auth: ^5.0.7
+  google_sign_in: ^6.0.2
   rxdart: ^0.27.7
   speech_to_text: ^6.1.1
 

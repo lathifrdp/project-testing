@@ -1,11 +1,15 @@
 // ignore_for_file: avoid_print
 
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:project_testing/bloc_rxdart_page.dart';
 import 'package:project_testing/login_facebook_page.dart';
+import 'package:project_testing/login_google_page.dart';
 import 'package:project_testing/speech_text_page.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(const MyApp());
 }
 
@@ -27,6 +31,7 @@ class _MyAppState extends State<MyApp> {
         '/speech-text': (context) => const SpeechTextPage(),
         '/bloc-rxdart': (context) => const BlocRxdartPage(),
         '/login-facebook': (context) => const LoginFacebookPage(),
+        '/login-google': (context) => const LoginGooglePage(),
       },
       home: Scaffold(
         appBar: AppBar(
@@ -51,18 +56,6 @@ class _MyAppState extends State<MyApp> {
                     style: TextStyle(color: Colors.black, fontSize: 20),
                   ),
                 ),
-                const SizedBox(
-                  height: 30,
-                ),
-                GestureDetector(
-                  onTap: () {
-                    navigatorKey.currentState?.pushNamed('/login-facebook');
-                  },
-                  child: const Text(
-                    "Login Facebook",
-                    style: TextStyle(color: Colors.black, fontSize: 20),
-                  ),
-                ),
                 const SizedBox(height: 30),
                 InkWell(
                   onTap: () {
@@ -75,6 +68,72 @@ class _MyAppState extends State<MyApp> {
                     child: const Text(
                       "Bloc RxDart",
                       style: TextStyle(color: Colors.white),
+                    ),
+                  ),
+                ),
+                const SizedBox(
+                  height: 30,
+                ),
+                GestureDetector(
+                  onTap: () {
+                    navigatorKey.currentState?.pushNamed('/login-facebook');
+                  },
+                  child: Container(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                    decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(20),
+                        border:
+                            Border.all(color: Colors.grey.shade300, width: 1)),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(
+                          Icons.facebook_rounded,
+                          color: Colors.blue.shade900,
+                        ),
+                        const SizedBox(
+                          width: 8,
+                        ),
+                        const Text(
+                          "Login Facebook",
+                          style: TextStyle(color: Colors.black, fontSize: 16),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                const SizedBox(
+                  height: 30,
+                ),
+                GestureDetector(
+                  onTap: () {
+                    navigatorKey.currentState?.pushNamed('/login-google');
+                  },
+                  child: Container(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                    decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(20),
+                        border:
+                            Border.all(color: Colors.grey.shade300, width: 1)),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(
+                          Icons.g_mobiledata_rounded,
+                          color: Colors.green.shade900,
+                        ),
+                        const SizedBox(
+                          width: 8,
+                        ),
+                        const Text(
+                          "Login Google",
+                          style: TextStyle(color: Colors.black, fontSize: 16),
+                        ),
+                      ],
                     ),
                   ),
                 ),
