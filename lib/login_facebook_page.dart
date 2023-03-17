@@ -2,9 +2,11 @@
 
 import 'dart:convert';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 class LoginFacebookPage extends StatefulWidget {
   const LoginFacebookPage({super.key});
@@ -91,11 +93,80 @@ class _LoginFacebookPageState extends State<LoginFacebookPage> {
     });
   }
 
+  Future<UserCredential?> signInWithFacebook() async {
+    final LoginResult result = await FacebookAuth.instance.login(
+      permissions: [
+        'public_profile',
+        'email',
+      ],
+    );
+    if (result.status == LoginStatus.success) {
+      // Create a credential from the access token
+      final OAuthCredential credential =
+          FacebookAuthProvider.credential(result.accessToken!.token);
+      print(result.accessToken);
+      print(result.accessToken!.token);
+      print("cred: $credential");
+
+      _accessToken = result.accessToken;
+      _printCredentials();
+      // get the user data
+      // by default we get the userId, email,name and picture
+      final userData = await FacebookAuth.instance.getUserData();
+      // final userData = await FacebookAuth.instance.getUserData(fields: "email,birthday,friends,gender,link");
+      _userData = userData;
+
+      // print(result.message);
+      // print(result.accessToken?.grantedPermissions);
+
+      setState(() {
+        _checking = false;
+      });
+
+      // Once signed in, return the UserCredential
+      return await FirebaseAuth.instance.signInWithCredential(credential);
+    } else {
+      print(result.status);
+      print(result.message);
+      print(result.accessToken?.grantedPermissions);
+    }
+    return null;
+  }
+
   Future<void> _logOut() async {
     await FacebookAuth.instance.logOut();
     _accessToken = null;
     _userData = null;
     setState(() {});
+  }
+
+  Future<UserCredential?> signInWithGoogle() async {
+    await GoogleSignIn().signOut();
+    // Trigger the authentication flow
+    final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+
+    // Obtain the auth details from the request
+    final GoogleSignInAuthentication? googleAuth =
+        await googleUser?.authentication;
+
+    if (googleAuth != null) {
+      // Create a new credential
+      final credential = GoogleAuthProvider.credential(
+        accessToken: googleAuth.accessToken,
+        idToken: googleAuth.idToken,
+      );
+
+      print(googleUser?.displayName);
+      print(googleUser?.email);
+      print(googleAuth);
+      print(credential);
+      var x = FirebaseAuth.instance.signInWithCredential(credential);
+      print(x);
+
+      // Once signed in, return the UserCredential
+      return await FirebaseAuth.instance.signInWithCredential(credential);
+    }
+    return null;
   }
 
   @override
@@ -133,6 +204,14 @@ class _LoginFacebookPageState extends State<LoginFacebookPage> {
                       child: Text(
                         _userData != null ? "LOGOUT" : "LOGIN",
                         style: const TextStyle(color: Colors.white),
+                      ),
+                    ),
+                    CupertinoButton(
+                      color: Colors.blue,
+                      onPressed: signInWithGoogle,
+                      child: const Text(
+                        "LOGIN GOOGLE",
+                        style: TextStyle(color: Colors.white),
                       ),
                     ),
                   ],
