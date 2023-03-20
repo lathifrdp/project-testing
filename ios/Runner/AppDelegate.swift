@@ -1,7 +1,8 @@
 import UIKit
 import Flutter
-import FBSDKCoreKit
-import FBSDKLoginKit
+//import FBSDKCoreKit
+//import FBSDKLoginKit
+import FirebaseCore
 
 @UIApplicationMain
 @objc class AppDelegate: FlutterAppDelegate {
@@ -10,6 +11,9 @@ import FBSDKLoginKit
     didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
   ) -> Bool {
     GeneratedPluginRegistrant.register(with: self)
+    if FirebaseApp.app() == nil {
+      FirebaseApp.configure()
+    }
     return super.application(application, didFinishLaunchingWithOptions: launchOptions)
     // ApplicationDelegate.shared.application(
     //         application,
