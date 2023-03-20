@@ -1,5 +1,7 @@
 // ignore_for_file: avoid_print
 
+import 'dart:convert';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -16,15 +18,39 @@ class _LoginGooglePageState extends State<LoginGooglePage> {
   String? displayName;
   String? email;
 
+  String prettyPrint(Map json) {
+    JsonEncoder encoder = const JsonEncoder.withIndent('  ');
+    String pretty = encoder.convert(json);
+    print(pretty);
+    return pretty;
+  }
+
   Future<UserCredential?> signInWithGoogle() async {
     // Trigger the authentication flow
     final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+
+    if (googleUser != null) {
+      Map<String, dynamic> toJson() => {
+            'id': googleUser.id,
+            'displayName': googleUser.displayName,
+            'email': googleUser.email,
+            'photoUrl': googleUser.photoUrl,
+            'serverAuthCode': googleUser.serverAuthCode,
+          };
+      print("Google User:::: ${prettyPrint(toJson())}");
+    }
 
     // Obtain the auth details from the request
     final GoogleSignInAuthentication? googleAuth =
         await googleUser?.authentication;
 
     if (googleAuth != null) {
+      Map<String, dynamic> toJson() => {
+            'accessToken': googleAuth.accessToken,
+            'idToken': googleAuth.idToken
+          };
+      print("Google Auth:::: ${prettyPrint(toJson())}");
+
       // Create a new credential
       final credential = GoogleAuthProvider.credential(
         accessToken: googleAuth.accessToken,
@@ -36,7 +62,8 @@ class _LoginGooglePageState extends State<LoginGooglePage> {
 
       print(googleUser?.displayName);
       print(googleUser?.email);
-      print(googleAuth);
+      print(googleAuth.idToken);
+      print(googleAuth.accessToken);
       print(credential);
       var x = FirebaseAuth.instance.signInWithCredential(credential);
       print(x);
