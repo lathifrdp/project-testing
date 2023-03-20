@@ -6,7 +6,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 
 class LoginFacebookPage extends StatefulWidget {
   const LoginFacebookPage({super.key});
@@ -140,35 +139,6 @@ class _LoginFacebookPageState extends State<LoginFacebookPage> {
     setState(() {});
   }
 
-  Future<UserCredential?> signInWithGoogle() async {
-    await GoogleSignIn().signOut();
-    // Trigger the authentication flow
-    final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
-
-    // Obtain the auth details from the request
-    final GoogleSignInAuthentication? googleAuth =
-        await googleUser?.authentication;
-
-    if (googleAuth != null) {
-      // Create a new credential
-      final credential = GoogleAuthProvider.credential(
-        accessToken: googleAuth.accessToken,
-        idToken: googleAuth.idToken,
-      );
-
-      print(googleUser?.displayName);
-      print(googleUser?.email);
-      print(googleAuth);
-      print(credential);
-      var x = FirebaseAuth.instance.signInWithCredential(credential);
-      print(x);
-
-      // Once signed in, return the UserCredential
-      return await FirebaseAuth.instance.signInWithCredential(credential);
-    }
-    return null;
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -204,14 +174,6 @@ class _LoginFacebookPageState extends State<LoginFacebookPage> {
                       child: Text(
                         _userData != null ? "LOGOUT" : "LOGIN",
                         style: const TextStyle(color: Colors.white),
-                      ),
-                    ),
-                    CupertinoButton(
-                      color: Colors.blue,
-                      onPressed: signInWithGoogle,
-                      child: const Text(
-                        "LOGIN GOOGLE",
-                        style: TextStyle(color: Colors.white),
                       ),
                     ),
                   ],
