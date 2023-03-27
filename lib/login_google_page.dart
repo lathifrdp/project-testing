@@ -17,6 +17,8 @@ class LoginGooglePage extends StatefulWidget {
 class _LoginGooglePageState extends State<LoginGooglePage> {
   String? displayName;
   String? email;
+  Map<String, dynamic>? _googleUser;
+  Map<String, dynamic>? _googleAuth;
 
   String prettyPrint(Map json) {
     JsonEncoder encoder = const JsonEncoder.withIndent('  ');
@@ -37,7 +39,10 @@ class _LoginGooglePageState extends State<LoginGooglePage> {
             'photoUrl': googleUser.photoUrl,
             'serverAuthCode': googleUser.serverAuthCode,
           };
-      print("Google User:::: ${prettyPrint(toJson())}");
+      setState(() {
+        _googleUser = toJson();
+        print(_googleUser);
+      });
     }
 
     // Obtain the auth details from the request
@@ -49,7 +54,10 @@ class _LoginGooglePageState extends State<LoginGooglePage> {
             'accessToken': googleAuth.accessToken,
             'idToken': googleAuth.idToken
           };
-      print("Google Auth:::: ${prettyPrint(toJson())}");
+      setState(() {
+        _googleAuth = toJson();
+        print(_googleAuth);
+      });
 
       // Create a new credential
       final credential = GoogleAuthProvider.credential(
