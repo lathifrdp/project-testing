@@ -6,6 +6,7 @@ import 'package:project_testing/bloc_rxdart_page.dart';
 import 'package:project_testing/login_apple_page.dart';
 import 'package:project_testing/login_facebook_page.dart';
 import 'package:project_testing/login_google_page.dart';
+import 'package:project_testing/login_linkedin_page.dart';
 import 'package:project_testing/speech_text_page.dart';
 
 void main() async {
@@ -34,6 +35,7 @@ class _MyAppState extends State<MyApp> {
         '/login-facebook': (context) => const LoginFacebookPage(),
         '/login-google': (context) => const LoginGooglePage(),
         '/login-apple': (context) => const LoginApplePage(),
+        '/login-linkedin': (context) => const LoginLinkedinPage(),
       },
       home: Scaffold(
         appBar: AppBar(
@@ -165,6 +167,38 @@ class _MyAppState extends State<MyApp> {
                         ),
                         Text(
                           "Login Apple",
+                          style: TextStyle(color: Colors.black, fontSize: 16),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                const SizedBox(
+                  height: 16,
+                ),
+                GestureDetector(
+                  onTap: () {
+                    navigatorKey.currentState?.pushNamed('/login-linkedin');
+                  },
+                  child: Container(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                    decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(20),
+                        border:
+                            Border.all(color: Colors.grey.shade300, width: 1)),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: const [
+                        Icon(
+                          Icons.link_rounded,
+                        ),
+                        SizedBox(
+                          width: 8,
+                        ),
+                        Text(
+                          "Login LinkedIn",
                           style: TextStyle(color: Colors.black, fontSize: 16),
                         ),
                       ],
